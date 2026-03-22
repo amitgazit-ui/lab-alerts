@@ -205,7 +205,8 @@
 
   let alerts=[], imgData=null, taggedPeople=[], focusedIdx=-1;
 
-  window.onload = () => { setNow(); switchTab('list'); loadAlerts(); setInterval(loadAlerts,10000); };
+  window.onload = () => { setNow(); switchTab('add'); loadAlerts(); setInterval(loadAlerts,10000); };
+
 
   function setNow() {
     document.getElementById("alert-time").value = new Date().toTimeString().slice(0,5);
@@ -232,7 +233,8 @@
     const filtered=LAB_MEMBERS.filter(m=>m.toLowerCase().startsWith(q)&&!taggedPeople.includes(m));
     // If query has text and no match, show "Add new" option
     if (q.length>0 && !filtered.find(m=>m.toLowerCase()===q)) {
-      filtered.push("➕ Add \""+val.slice(atIdx+1)+"\"");
+      filtered.push("__new__:"+val.slice(atIdx+1));
+
     }
     filtered.length ? showDropdown(filtered) : hideDropdown();
   }
@@ -249,7 +251,12 @@
   function showDropdown(members) {
     focusedIdx=-1;
     const dd=document.getElementById("mention-dropdown");
-    dd.innerHTML=members.map(m=>`<div class="mention-item" data-name="${m}" onmousedown="selectMember('${m}')"><div class="avatar">${m[0]}</div>@${m}</div>`).join("");
+    dd.innerHTML=members.map(m=>{
+    const isNew=m.startsWith("__new__:");
+    const display=isNew?"➕ Add \""+m.slice(8)+"\"":"@"+m;
+    const letter=isNew?"+":m[0];
+    return `<div class="mention-item" data-name="${m}" onmousedown="selectMember('${m}')"><div class="avatar">${letter}</div>${display}</div>`;
+    }).join("");
     dd.style.display="block";
   }
   function hideDropdown() { document.getElementById("mention-dropdown").style.display="none"; focusedIdx=-1; }
@@ -257,8 +264,7 @@
     const inp=document.getElementById("people-input");
     const atIdx=inp.value.lastIndexOf("@");
     // Handle "Add new" option
-    const addMatch = name.match(/^➕ Add "(.+)"$/);
-    const finalName = addMatch ? addMatch[1] : name;
+    const finalName = name.startsWith("__new__:") ? name.slice(8) : name;
     inp.value=atIdx>=0?inp.value.slice(0,atIdx):"";
     if (!LAB_MEMBERS.includes(finalName)) LAB_MEMBERS.push(finalName);
     if (!taggedPeople.includes(finalName)) { taggedPeople.push(finalName); renderTags(); }
