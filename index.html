@@ -200,7 +200,7 @@
   const API_KEY = "$2a$10$cz83/MSd4laRPaJhEpkvuulNNOjjOTspTSti1a.fX2.Jfpc1duftq";
   const BASE    = "https://api.jsonbin.io/v3/b/" + BIN_ID;
 
-  const LAB_MEMBERS = ["Alice","Bob","Dana","Eli","Gal","Hila","Itay","Yael","Noam","Shira"];
+  let LAB_MEMBERS = []; // builds automatically from tagged people
   const AVATAR_COLORS = ["#e74c3c","#3498db","#2ecc71","#9b59b6","#f39c12","#1abc9c","#e67e22","#e91e63","#00bcd4","#8bc34a"];
 
   let alerts=[], imgData=null, taggedPeople=[], focusedIdx=-1;
@@ -225,7 +225,15 @@
     const val=e.target.value, atIdx=val.lastIndexOf("@");
     if (atIdx===-1) { hideDropdown(); return; }
     const q=val.slice(atIdx+1).toLowerCase();
+    // Build members list from all previously tagged people across all alerts
+    const allPeople=[...new Set(alerts.flatMap(a=>a.people||[]))];
+    // Merge with current session LAB_MEMBERS
+    allPeople.forEach(p=>{ if(!LAB_MEMBERS.includes(p)) LAB_MEMBERS.push(p); });
     const filtered=LAB_MEMBERS.filter(m=>m.toLowerCase().startsWith(q)&&!taggedPeople.includes(m));
+    // If query has text and no match, show "Add new" option
+    if (q.length>0 && !filtered.find(m=>m.toLowerCase()===q)) {
+      filtered.push("➕ Add \""+val.slice(atIdx+1)+"\"");
+    }
     filtered.length ? showDropdown(filtered) : hideDropdown();
   }
   function onPeopleKeydown(e) {
@@ -248,8 +256,12 @@
   function selectMember(name) {
     const inp=document.getElementById("people-input");
     const atIdx=inp.value.lastIndexOf("@");
+    // Handle "Add new" option
+    const addMatch = name.match(/^➕ Add "(.+)"$/);
+    const finalName = addMatch ? addMatch[1] : name;
     inp.value=atIdx>=0?inp.value.slice(0,atIdx):"";
-    if (!taggedPeople.includes(name)) { taggedPeople.push(name); renderTags(); }
+    if (!LAB_MEMBERS.includes(finalName)) LAB_MEMBERS.push(finalName);
+    if (!taggedPeople.includes(finalName)) { taggedPeople.push(finalName); renderTags(); }
     hideDropdown(); inp.focus();
   }
   function renderTags() {
@@ -320,8 +332,7 @@
       if (data && data.record && Array.isArray(data.record.alerts)) {
         alerts=data.record.alerts;
         renderAlerts();
-        renderLeaderboard();
-
+        if (document.getElementById("view-leaderboard").style.display!=="none") renderLeaderboard();
       }
     } catch(e) { console.error("Load error:",e); document.getElementById("spinner").textContent="❌ Failed to load — "+e.message; }
   }
