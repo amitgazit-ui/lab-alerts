@@ -31,47 +31,43 @@
     .tab.active { background:var(--red); color:white; box-shadow:0 4px 15px rgba(255,59,59,.3); }
 
     .content { padding:16px; max-width:520px; margin:0 auto; }
-
     .form-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:20px; }
     .form-title { font-size:18px; font-weight:700; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
     .dot { width:10px; height:10px; background:var(--red); border-radius:50%; animation:blink 1s infinite; flex-shrink:0; }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
     .field { margin-bottom:14px; }
     .field label { font-size:12px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.8px; display:block; margin-bottom:8px; }
-    .time-row { display:flex; gap:8px; align-items:center; }
-    .time-input { flex:1; padding:11px 14px; background:var(--card2); border:1px solid var(--border); border-radius:10px; color:var(--text); font-family:'Inter',sans-serif; font-size:15px; transition:border .2s; }
+    .time-row { display:flex; gap:8px; }
+    .time-input { flex:1; padding:11px 14px; background:var(--card2); border:1px solid var(--border); border-radius:10px; color:var(--text); font-family:'Inter',sans-serif; font-size:15px; }
     .time-input:focus { outline:none; border-color:var(--red); }
     .time-now-btn { padding:11px 14px; background:var(--card2); border:1px solid var(--border); border-radius:10px; color:var(--muted); font-size:12px; font-weight:700; cursor:pointer; white-space:nowrap; transition:all .2s; font-family:'Inter',sans-serif; }
     .time-now-btn:hover { border-color:var(--red); color:var(--text); }
-
     .people-wrap { position:relative; }
-    .people-input { width:100%; padding:11px 14px; background:var(--card2); border:1px solid var(--border); border-radius:10px; color:var(--text); font-family:'Inter',sans-serif; font-size:15px; transition:border .2s; }
+    .people-input { width:100%; padding:11px 14px; background:var(--card2); border:1px solid var(--border); border-radius:10px; color:var(--text); font-family:'Inter',sans-serif; font-size:15px; }
     .people-input:focus { outline:none; border-color:var(--blue); }
     .mention-dropdown { position:absolute; top:calc(100% + 4px); left:0; right:0; background:#1e1e1e; border:1px solid var(--border); border-radius:10px; z-index:100; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,.5); display:none; }
     .mention-item { padding:10px 14px; cursor:pointer; font-size:14px; display:flex; align-items:center; gap:8px; transition:background .15s; }
     .mention-item:hover,.mention-item.focused { background:rgba(52,152,219,.15); }
-    .avatar { width:28px; height:28px; border-radius:50%; background:var(--blue); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:white; flex-shrink:0; }
-    .avatar.new-avatar { background:#555; }
+    .av { width:28px; height:28px; border-radius:50%; background:var(--blue); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:white; flex-shrink:0; }
+    .av.new { background:#555; }
     .tags-wrap { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
     .tag { display:inline-flex; align-items:center; gap:5px; background:rgba(52,152,219,.15); border:1px solid rgba(52,152,219,.3); border-radius:20px; padding:4px 10px; font-size:13px; font-weight:600; color:#5dade2; }
     .tag button { background:none; border:none; cursor:pointer; color:#5dade2; font-size:14px; line-height:1; padding:0; opacity:.6; }
     .tag button:hover { opacity:1; }
-
-    .field textarea { width:100%; padding:12px 14px; background:var(--card2); border:1px solid var(--border); border-radius:10px; color:var(--text); font-family:'Inter',sans-serif; font-size:15px; resize:none; transition:border .2s; }
+    .field textarea { width:100%; padding:12px 14px; background:var(--card2); border:1px solid var(--border); border-radius:10px; color:var(--text); font-family:'Inter',sans-serif; font-size:15px; resize:none; }
     .field textarea:focus { outline:none; border-color:var(--red); }
     .img-upload { width:100%; padding:12px; background:var(--card2); border:1px dashed var(--border); border-radius:10px; color:var(--muted); font-size:14px; font-weight:600; cursor:pointer; transition:all .2s; text-align:center; }
     .img-upload:hover { border-color:var(--red); color:var(--text); }
     .preview-wrap { position:relative; margin-top:10px; border-radius:10px; overflow:hidden; }
     .preview-wrap img { width:100%; max-height:200px; object-fit:cover; display:block; }
     .preview-wrap .remove { position:absolute; top:8px; right:8px; background:rgba(0,0,0,.7); border:none; color:white; border-radius:50%; width:30px; height:30px; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
-    .btn-submit { width:100%; padding:15px; background:var(--red); color:white; border:none; border-radius:12px; font-size:16px; font-weight:800; cursor:pointer; letter-spacing:.5px; box-shadow:0 4px 20px rgba(255,59,59,.35); transition:all .2s; margin-top:4px; }
+    .btn-submit { width:100%; padding:15px; background:var(--red); color:white; border:none; border-radius:12px; font-size:16px; font-weight:800; cursor:pointer; box-shadow:0 4px 20px rgba(255,59,59,.35); transition:all .2s; margin-top:4px; }
     .btn-submit:hover { background:#ff5555; transform:translateY(-1px); }
     .btn-submit:disabled { background:#444; box-shadow:none; transform:none; cursor:not-allowed; }
 
     .lb-card { background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
-    .lb-row { display:flex; align-items:center; gap:12px; padding:14px 16px; border-bottom:1px solid var(--border); transition:background .15s; }
+    .lb-row { display:flex; align-items:center; gap:12px; padding:14px 16px; border-bottom:1px solid var(--border); }
     .lb-row:last-child { border-bottom:none; }
-    .lb-row:hover { background:rgba(255,255,255,.02); }
     .lb-rank { font-size:22px; width:32px; text-align:center; flex-shrink:0; }
     .lb-avatar { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:700; color:white; flex-shrink:0; }
     .lb-name { font-weight:700; font-size:15px; flex:1; }
@@ -79,11 +75,11 @@
     .lb-count { font-size:22px; font-weight:900; color:var(--red); line-height:1; }
     .lb-label { font-size:11px; color:var(--muted); }
     .lb-bar-wrap { height:4px; background:var(--border); border-radius:2px; margin-top:6px; }
-    .lb-bar { height:4px; border-radius:2px; background:var(--red); transition:width .6s ease; }
+    .lb-bar { height:4px; border-radius:2px; transition:width .6s ease; }
     .lb-empty { text-align:center; padding:40px; color:var(--muted); font-size:14px; }
 
     .list-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
-    .list-header .title { font-size:13px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+    .list-title { font-size:13px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
     .refresh-btn { background:none; border:1px solid var(--border); border-radius:8px; color:var(--muted); padding:6px 12px; font-size:12px; cursor:pointer; font-family:'Inter',sans-serif; transition:all .2s; }
     .refresh-btn:hover { border-color:var(--red); color:var(--text); }
     .alert-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:10px; border-left:3px solid var(--red); transition:transform .15s; }
@@ -91,10 +87,10 @@
     .alert-top { display:flex; justify-content:space-between; align-items:flex-start; }
     .alert-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(255,59,59,.12); border:1px solid rgba(255,59,59,.25); border-radius:20px; padding:3px 10px; font-size:12px; font-weight:700; color:var(--red); }
     .alert-meta { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
-    .meta-chip { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:var(--muted); background:var(--card2); border-radius:6px; padding:4px 8px; }
+    .meta-chip { font-size:12px; color:var(--muted); background:var(--card2); border-radius:6px; padding:4px 8px; }
     .alert-note { margin-top:8px; font-size:14px; color:#ccc; padding:8px 10px; background:var(--card2); border-radius:8px; }
     .alert-people { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
-    .person-tag { display:inline-flex; align-items:center; gap:4px; background:rgba(52,152,219,.12); border:1px solid rgba(52,152,219,.25); border-radius:20px; padding:3px 9px; font-size:12px; font-weight:600; color:#5dade2; }
+    .person-tag { background:rgba(52,152,219,.12); border:1px solid rgba(52,152,219,.25); border-radius:20px; padding:3px 9px; font-size:12px; font-weight:600; color:#5dade2; }
     .alert-img { width:100%; border-radius:8px; margin-top:10px; max-height:180px; object-fit:cover; }
     .del-btn { background:none; border:none; cursor:pointer; color:#444; font-size:16px; padding:4px; transition:color .2s; }
     .del-btn:hover { color:var(--red); }
@@ -103,7 +99,7 @@
     .spinner { text-align:center; padding:50px; color:var(--muted); font-size:14px; }
     .live-dot { display:inline-block; width:7px; height:7px; background:var(--green); border-radius:50%; margin-left:6px; animation:blink 1.5s infinite; }
     .footer { text-align:center; color:#444; font-size:11px; padding:24px 16px; }
-    .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--green); color:white; padding:12px 24px; border-radius:50px; font-weight:700; font-size:14px; transition:transform .3s ease; z-index:999; box-shadow:0 4px 20px rgba(46,204,113,.4); }
+    .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--green); color:white; padding:12px 24px; border-radius:50px; font-weight:700; font-size:14px; transition:transform .3s; z-index:999; box-shadow:0 4px 20px rgba(46,204,113,.4); }
     .toast.show { transform:translateX(-50%) translateY(0); }
   </style>
 </head>
@@ -175,14 +171,14 @@
 
   <!-- LEADERBOARD -->
   <div id="view-leaderboard" style="display:none">
-    <div class="list-header"><span class="title">🏆 Shelter Champions</span></div>
+    <div class="list-header"><span class="list-title">🏆 Shelter Champions</span></div>
     <div id="leaderboard-content"></div>
   </div>
 
   <!-- HISTORY -->
   <div id="view-list" style="display:none">
     <div class="list-header">
-      <span class="title">Alert History</span>
+      <span class="list-title">Alert History</span>
       <button class="refresh-btn" onclick="loadAlerts()">↻ Refresh</button>
     </div>
     <div id="spinner" class="spinner">Loading alerts...</div>
@@ -191,19 +187,16 @@
 
 </div>
 
-<div class="footer">Auto-refreshes every 120s · Shared across all devices</div>
+<div class="footer">Live updates · Shared across all devices</div>
 <div class="toast" id="toast"></div>
 
 <script>
-  const BIN_ID  = "69c034e0b7ec241ddc915309 ";
-  const API_KEY = "$2a$10$cz83/MSd4laRPaJhEpkvuulNNOjjOTspTSti1a.fX2.Jfpc1duftq";
-  const BASE    = "https://api.jsonbin.io/v3/b/" + BIN_ID;
-  const AVATAR_COLORS = ["#e74c3c","#3498db","#2ecc71","#9b59b6","#f39c12","#1abc9c","#e67e22","#e91e63","#00bcd4","#8bc34a"];
+  const DB = "https://lab-alerts-d7191-default-rtdb.firebaseio.com";
+  const COLORS = ["#e74c3c","#3498db","#2ecc71","#9b59b6","#f39c12","#1abc9c","#e67e22","#e91e63","#00bcd4","#8bc34a"];
 
-  let alerts=[], imgData=null, taggedPeople=[], focusedIdx=-1;
-  let labMembers=(); // built automatically from alert history
+  let alerts = [], labMembers = [], taggedPeople = [], imgData = null, focusedIdx = -1;
 
-  window.onload = () => { setNow(); loadAlerts(); setInterval(loadAlerts, 60000); };
+  window.onload = () => { setNow(); loadAlerts(); };
 
   function setNow() {
     document.getElementById("alert-time").value = new Date().toTimeString().slice(0,5);
@@ -218,200 +211,177 @@
     if (v==="leaderboard") renderLeaderboard();
   }
 
-  // ── Build members list from history ──
   function rebuildMembers() {
     const all = [...new Set(alerts.flatMap(a => a.people||[]))];
     all.forEach(p => { if (!labMembers.includes(p)) labMembers.push(p); });
   }
 
+  // ── Firebase ──
+  async function loadAlerts() {
+    try {
+      const res = await fetch(DB + "/alerts.json");
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const data = await res.json();
+      if (data) {
+        // Firebase returns an object with keys, convert to sorted array
+        alerts = Object.values(data).sort((a,b) => a.id - b.id);
+      } else {
+        alerts = [];
+      }
+      rebuildMembers();
+      renderAlerts();
+      renderLeaderboard();
+    } catch(e) {
+      console.error("Load error:", e);
+      document.getElementById("spinner").textContent = "❌ Failed to load";
+    }
+  }
+
+  async function saveAlert(newAlert) {
+    const res = await fetch(DB + "/alerts/" + newAlert.id + ".json", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newAlert)
+    });
+    if (!res.ok) throw new Error("Save failed: HTTP " + res.status);
+  }
+
+  async function removeAlert(id) {
+    const res = await fetch(DB + "/alerts/" + id + ".json", { method: "DELETE" });
+    if (!res.ok) throw new Error("Delete failed");
+  }
+
+  // ── Submit ──
+  async function submitAlert() {
+    const btn = document.getElementById("submit-btn");
+    btn.textContent = "⏳ Saving..."; btn.disabled = true;
+    const timeVal = document.getElementById("alert-time").value || new Date().toTimeString().slice(0,5);
+    const newAlert = {
+      id: Date.now(),
+      timestamp: new Date().toISOString(),
+      alertTime: new Date().toISOString().slice(0,10) + "T" + timeVal,
+      people: [...taggedPeople],
+      note: document.getElementById("note").value.trim(),
+      image: imgData || null
+    };
+    try {
+      await saveAlert(newAlert);
+      alerts.push(newAlert);
+      rebuildMembers();
+      document.getElementById("note").value = "";
+      taggedPeople = []; renderTags(); removeImg();
+      renderAlerts(); renderLeaderboard();
+      showToast("✅ Alert logged!");
+      switchTab("list");
+    } catch(err) { alert("Error saving: " + err.message); }
+    btn.textContent = "🚨 Log Alert Now"; btn.disabled = false;
+  }
+
+  async function deleteAlert(id) {
+    if (!confirm("Delete this alert?")) return;
+    try {
+      await removeAlert(id);
+      alerts = alerts.filter(a => a.id !== id);
+      renderAlerts(); renderLeaderboard();
+    } catch(e) { alert("Error deleting"); }
+  }
+
   // ── @ mention ──
   function onPeopleInput(e) {
-    const val=e.target.value, atIdx=val.lastIndexOf("@");
-    if (atIdx===-1) { hideDropdown(); return; }
-    const q=val.slice(atIdx+1);
-    const qLow=q.toLowerCase();
-    const filtered=labMembers.filter(m => m.toLowerCase().startsWith(qLow) && !taggedPeople.includes(m));
-    // Add "new person" option if typed something not already in list
-    if (q.length>0 && !labMembers.find(m=>m.toLowerCase()===qLow)) {
-      filtered.push("__new__:"+q);
+    const val = e.target.value, atIdx = val.lastIndexOf("@");
+    if (atIdx === -1) { hideDropdown(); return; }
+    const q = val.slice(atIdx+1), qLow = q.toLowerCase();
+    const filtered = labMembers.filter(m => m.toLowerCase().startsWith(qLow) && !taggedPeople.includes(m));
+    if (q.length > 0 && !labMembers.find(m => m.toLowerCase() === qLow)) {
+      filtered.push("__new__:" + q);
     }
     filtered.length ? showDropdown(filtered) : hideDropdown();
   }
 
   function onPeopleKeydown(e) {
-    const dd=document.getElementById("mention-dropdown");
-    const items=dd.querySelectorAll(".mention-item");
-    if (dd.style.display==="none"||!items.length) return;
+    const dd = document.getElementById("mention-dropdown");
+    const items = dd.querySelectorAll(".mention-item");
+    if (dd.style.display === "none" || !items.length) return;
     if (e.key==="ArrowDown") { e.preventDefault(); focusedIdx=Math.min(focusedIdx+1,items.length-1); updateFocus(items); }
     else if (e.key==="ArrowUp") { e.preventDefault(); focusedIdx=Math.max(focusedIdx-1,0); updateFocus(items); }
-    else if (e.key==="Enter"||e.key==="Tab") { if(focusedIdx>=0){e.preventDefault(); const n=items[focusedIdx].dataset.name; selectMember(n);} }
+    else if (e.key==="Enter"||e.key==="Tab") { if(focusedIdx>=0){e.preventDefault();selectMember(items[focusedIdx].dataset.name);} }
     else if (e.key==="Escape") hideDropdown();
   }
 
-  function updateFocus(items) {
-    items.forEach((el,i) => el.className="mention-item"+(i===focusedIdx?" focused":""));
-  }
+  function updateFocus(items) { items.forEach((el,i) => el.className="mention-item"+(i===focusedIdx?" focused":"")); }
 
   function showDropdown(members) {
-    focusedIdx=-1;
-    const dd=document.getElementById("mention-dropdown");
-    dd.innerHTML=members.map(m => {
-      const isNew=m.startsWith("__new__:");
-      const displayName=isNew ? m.slice(8) : m;
-      const displayText=isNew ? `➕ Add "${displayName}"` : `@${displayName}`;
-      const letter=isNew ? "+" : displayName[0].toUpperCase();
-      const avatarClass=isNew ? "avatar new-avatar" : "avatar";
+    focusedIdx = -1;
+    const dd = document.getElementById("mention-dropdown");
+    dd.innerHTML = members.map(m => {
+      const isNew = m.startsWith("__new__:");
+      const name = isNew ? m.slice(8) : m;
+      const label = isNew ? `➕ Add "${name}"` : `@${name}`;
+      const letter = isNew ? "+" : name[0].toUpperCase();
       return `<div class="mention-item" data-name="${m}" onmousedown="selectMember(this.dataset.name)">
-        <div class="${avatarClass}">${letter}</div>${displayText}
+        <div class="av${isNew?' new':''}">${letter}</div>${label}
       </div>`;
     }).join("");
-    dd.style.display="block";
+    dd.style.display = "block";
   }
 
-  function hideDropdown() {
-    document.getElementById("mention-dropdown").style.display="none";
-    focusedIdx=-1;
-  }
+  function hideDropdown() { document.getElementById("mention-dropdown").style.display="none"; focusedIdx=-1; }
 
   function selectMember(raw) {
-    const isNew=raw.startsWith("__new__:");
-    const name=isNew ? raw.slice(8) : raw;
-    const inp=document.getElementById("people-input");
-    const atIdx=inp.value.lastIndexOf("@");
-    inp.value=atIdx>=0 ? inp.value.slice(0,atIdx) : "";
+    const isNew = raw.startsWith("__new__:");
+    const name = isNew ? raw.slice(8) : raw;
+    const inp = document.getElementById("people-input");
+    inp.value = inp.value.slice(0, inp.value.lastIndexOf("@"));
     if (!labMembers.includes(name)) labMembers.push(name);
     if (!taggedPeople.includes(name)) { taggedPeople.push(name); renderTags(); }
-    hideDropdown();
-    inp.focus();
+    hideDropdown(); inp.focus();
   }
 
   function renderTags() {
-    document.getElementById("tags-wrap").innerHTML=taggedPeople.map(p =>
+    document.getElementById("tags-wrap").innerHTML = taggedPeople.map(p =>
       `<div class="tag">@${p}<button onclick="removeTag('${p}')">×</button></div>`
     ).join("");
   }
-
   function removeTag(name) { taggedPeople=taggedPeople.filter(p=>p!==name); renderTags(); }
 
   // ── Image ──
   function handleImage(e) {
-    const file=e.target.files[0]; if(!file) return;
-    const reader=new FileReader();
-    reader.onload=ev=>{
-      const img=new Image();
-      img.onload=()=>{
-        const canvas=document.createElement("canvas");
-        const max=800; let w=img.width,h=img.height;
+    const file = e.target.files[0]; if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const max=800; let w=img.width, h=img.height;
         if(w>max){h=h*max/w;w=max;} if(h>max){w=w*max/h;h=max;}
         canvas.width=w; canvas.height=h;
         canvas.getContext("2d").drawImage(img,0,0,w,h);
-        imgData=canvas.toDataURL("image/jpeg",0.7);
-        document.getElementById("preview").src=imgData;
-        document.getElementById("preview-wrap").style.display="block";
+        imgData = canvas.toDataURL("image/jpeg",0.7);
+        document.getElementById("preview").src = imgData;
+        document.getElementById("preview-wrap").style.display = "block";
       };
-      img.src=ev.target.result;
+      img.src = ev.target.result;
     };
     reader.readAsDataURL(file);
   }
 
   function removeImg() {
-    imgData=null;
-    document.getElementById("preview-wrap").style.display="none";
-    document.getElementById("fileCam").value="";
-    document.getElementById("fileLib").value="";
+    imgData = null;
+    document.getElementById("preview-wrap").style.display = "none";
+    document.getElementById("fileCam").value = "";
+    document.getElementById("fileLib").value = "";
   }
 
-  // ── Submit ──
-  async function submitAlert() {
-    const btn=document.getElementById("submit-btn");
-    btn.textContent="⏳ Saving..."; btn.disabled=true;
-    const timeVal=document.getElementById("alert-time").value||new Date().toTimeString().slice(0,5);
-    const newAlert={
-      id:Date.now(), timestamp:new Date().toISOString(),
-      alertTime:new Date().toISOString().slice(0,10)+"T"+timeVal,
-      people:[...taggedPeople],
-      note:document.getElementById("note").value.trim(),
-      image:imgData||null
-    };
-    try {
-      const latest=await fetch(BASE+"/latest",{headers:{"X-Access-Key":API_KEY}});
-      if(!latest.ok) throw new Error("Fetch failed");
-      const latestData=await latest.json();
-      const fresh=latestData?.record?.alerts||[];
-      const updated=[...fresh,newAlert];
-      const saveRes=await fetch(BASE,{method:"PUT",headers:{"Content-Type":"application/json","X-Access-Key":API_KEY},body:JSON.stringify({alerts:updated})});
-      if(!saveRes.ok) throw new Error("Save failed");
-      alerts=updated;
-      rebuildMembers();
-      document.getElementById("note").value="";
-      taggedPeople=[]; renderTags(); removeImg();
-      renderAlerts(); renderLeaderboard();
-      showToast("✅ Alert logged!");
-      switchTab("list");
-    } catch(err) { alert("Error saving: "+err.message); }
-    btn.textContent="🚨 Log Alert Now"; btn.disabled=false;
-  }
-
-  // ── Load ──
-  async function loadAlerts() {
-    try {
-      const res=await fetch(BASE+"/latest",{headers:{"X-Access-Key":API_KEY}});
-      if(!res.ok) throw new Error("HTTP "+res.status);
-      const data=await res.json();
-      if(data&&data.record&&Array.isArray(data.record.alerts)) {
-        alerts=data.record.alerts;
-        rebuildMembers();
-        renderAlerts();
-        renderLeaderboard();
-      }
-    } catch(e) { console.error("Load error:",e); }
-  }
-
-  // ── Leaderboard ──
-  function buildLeaderboard() {
-    const counts={};
-    alerts.forEach(a=>(a.people||[]).forEach(p=>{ counts[p]=(counts[p]||0)+1; }));
-    return Object.entries(counts).sort((a,b)=>b[1]-a[1]);
-  }
-
-  function renderLeaderboard() {
-    const board=buildLeaderboard();
-    const el=document.getElementById("leaderboard-content");
-    if(!board.length) {
-      el.innerHTML='<div class="lb-empty">😌 No data yet — tag people in alerts to see the leaderboard!</div>';
-      return;
-    }
-    const max=board[0][1];
-    const medals=["🥇","🥈","🥉"];
-    el.innerHTML=`<div class="lb-card">${board.map(([name,count],i)=>{
-      const color=AVATAR_COLORS[i%AVATAR_COLORS.length];
-      const pct=Math.round(count/max*100);
-      const barColor=i===0?'var(--gold)':i===1?'var(--silver)':i===2?'var(--bronze)':'var(--red)';
-      return `<div class="lb-row">
-        <div class="lb-rank">${medals[i]||"#"+(i+1)}</div>
-        <div class="lb-avatar" style="background:${color}">${name[0].toUpperCase()}</div>
-        <div style="flex:1">
-          <div class="lb-name">${name}</div>
-          <div class="lb-bar-wrap"><div class="lb-bar" style="width:${pct}%;background:${barColor}"></div></div>
-        </div>
-        <div class="lb-right">
-          <div class="lb-count">${count}</div>
-          <div class="lb-label">alert${count!==1?"s":""}</div>
-        </div>
-      </div>`;
-    }).join("")}</div>`;
-  }
-
-  // ── Render alerts ──
+  // ── Render ──
   function renderAlerts() {
-    document.getElementById("spinner").style.display="none";
-    const today=new Date().toDateString();
-    document.getElementById("total").textContent=alerts.length;
-    document.getElementById("today-count").textContent=alerts.filter(a=>new Date(a.timestamp).toDateString()===today).length;
-    const list=document.getElementById("alerts-list");
-    if(!alerts.length) { list.innerHTML='<div class="empty"><span class="icon">😌</span><p>No alerts logged yet</p></div>'; return; }
-    list.innerHTML=alerts.slice().reverse().map((a,i)=>{
-      const t=a.alertTime?new Date(a.alertTime).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}):formatDate(a.timestamp);
+    document.getElementById("spinner").style.display = "none";
+    const today = new Date().toDateString();
+    document.getElementById("total").textContent = alerts.length;
+    document.getElementById("today-count").textContent = alerts.filter(a => new Date(a.timestamp).toDateString()===today).length;
+    const list = document.getElementById("alerts-list");
+    if (!alerts.length) { list.innerHTML='<div class="empty"><span class="icon">😌</span><p>No alerts logged yet</p></div>'; return; }
+    list.innerHTML = alerts.slice().reverse().map((a,i) => {
+      const t = a.alertTime ? new Date(a.alertTime).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}) : formatDate(a.timestamp);
       return `<div class="alert-card">
         <div class="alert-top">
           <span class="alert-badge">🚨 Alert #${alerts.length-i}</span>
@@ -429,20 +399,40 @@
     }).join("");
   }
 
-  async function deleteAlert(id) {
-    if(!confirm("Delete this alert?")) return;
-    const updated=alerts.filter(a=>a.id!==id);
-    await fetch(BASE,{method:"PUT",headers:{"Content-Type":"application/json","X-Access-Key":API_KEY},body:JSON.stringify({alerts:updated})});
-    alerts=updated; renderAlerts(); renderLeaderboard();
+  function renderLeaderboard() {
+    const counts = {};
+    alerts.forEach(a => (a.people||[]).forEach(p => { counts[p]=(counts[p]||0)+1; }));
+    const board = Object.entries(counts).sort((a,b) => b[1]-a[1]);
+    const el = document.getElementById("leaderboard-content");
+    if (!board.length) { el.innerHTML='<div class="lb-empty">😌 No data yet — tag people in alerts!</div>'; return; }
+    const max = board[0][1];
+    const medals = ["🥇","🥈","🥉"];
+    const barColors = ["var(--gold)","var(--silver)","var(--bronze)"];
+    el.innerHTML = `<div class="lb-card">${board.map(([name,count],i) => {
+      const color = COLORS[i % COLORS.length];
+      const barColor = barColors[i] || "var(--red)";
+      return `<div class="lb-row">
+        <div class="lb-rank">${medals[i]||"#"+(i+1)}</div>
+        <div class="lb-avatar" style="background:${color}">${name[0].toUpperCase()}</div>
+        <div style="flex:1">
+          <div class="lb-name">${name}</div>
+          <div class="lb-bar-wrap"><div class="lb-bar" style="width:${Math.round(count/max*100)}%;background:${barColor}"></div></div>
+        </div>
+        <div class="lb-right">
+          <div class="lb-count">${count}</div>
+          <div class="lb-label">alert${count!==1?"s":""}</div>
+        </div>
+      </div>`;
+    }).join("")}</div>`;
   }
 
   function formatDate(iso) {
-    const d=new Date(iso);
-    return d.toLocaleDateString("en-GB")+" "+d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
+    const d = new Date(iso);
+    return d.toLocaleDateString("en-GB") + " " + d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
   }
 
   function showToast(msg) {
-    const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show");
+    const t = document.getElementById("toast"); t.textContent=msg; t.classList.add("show");
     setTimeout(()=>t.classList.remove("show"),3000);
   }
 </script>
