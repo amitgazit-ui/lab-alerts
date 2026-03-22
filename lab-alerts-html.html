@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lab Shelter Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --red:#ff3b3b; --bg:#0d0d0d; --card:#1a1a1a; --card2:#222;
+      --border:#2e2e2e; --text:#f0f0f0; --muted:#888; --green:#2ecc71; --blue:#3498db;
+      --gold:#f1c40f; --silver:#bdc3c7; --bronze:#e67e22;
+    }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+
+    /* HEADER */
+    .header { background:linear-gradient(135deg,#1a0000,#2d0000,#1a0000); border-bottom:1px solid #3a0000; padding:28px 20px 24px; text-align:center; position:relative; overflow:hidden; }
+    .header::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 0%,rgba(255,59,59,0.15),transparent 70%); }
+    .siren { font-size:48px; display:block; margin-bottom:6px; animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+    .header h1 { font-size:26px; font-weight:900; letter-spacing:-.5px; position:relative; }
+    .header h1 span { color:var(--red); }
+    .header .subtitle { color:var(--muted); font-size:13px; margin-top:4px; position:relative; }
+    .counter-row { display:flex; justify-content:center; gap:16px; margin-top:20px; position:relative; flex-wrap:wrap; }
+    .counter-box { background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:12px; padding:12px 20px; text-align:center; }
+    .counter-box .num { font-size:34px; font-weight:900; color:var(--red); line-height:1; }
+    .counter-box .lbl { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-top:2px; }
+
+    /* TABS */
+    .tabs { display:flex; margin:20px 16px 0; background:var(--card); border-radius:12px; padding:4px; border:1px solid var(--border); }
+    .tab { flex:1; padding:10px 6px; border-radius:9px; border:none; cursor:pointer; font-weight:700; font-size:13px; background:none; color:var(--muted); transition:all .2s; }
+    .tab.active { background:var(--red); color:white; box-shadow:0 4px 15px rgba(255,59,59,.3); }
+
+    .content { padding:16px; max-width:520px; margin:0 auto; }
+
+    /* FORM */
+    .form-card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:20px; }
+    .form-title { font-size:18px; font-weight:700; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
+    .dot { width:10px; height:10px; background:var(--red); border-radius:50%; animation:blink 1s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+    .field { margin-bottom:14px; }
+    .field label { font-size:12px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.8px; display:block; margin-bottom:8px; }
+    .time-row { display:flex; gap:8px; align-items:center; }
+    .time-input { flex:1; padding:11px 14px; background:var(--card2); border:1px solid var(--border); border-radius:10px; color:var(--text); font-family:'Inter',sans-serif; font-size:15px; transition:border .2s; }
+    .time-input:focus { outline:none; border-color:var(--red); }
+    .time-now-btn { padding:11px 14px; background:var(--card2); border:1px solid var(--border); border-radius:10px; color:var(--muted); font-size:12px; font-weight:700; cursor:pointer; white-space:nowrap; transition:all .2s; font-family:'Inter',sans-serif; }
+    .time-now-btn:hover { border-color:var(--red); color:var(--text); }
+    .people-wrap { position:relative; }
+    .people-input { width:100%; padding:11px 14px; background:var(--card2); border:1px solid var(--border); border-radius:10px; color:var(--text); font-family:'Inter',sans-serif; font-size:15px; transition:border .2s; }
+    .people-input:focus { outline:none; border-color:var(--blue); }
+    .mention-dropdown { position:absolute; top:calc(100% + 4px); left:0; right:0; background:#1e1e1e; border:1px solid var(--border); border-radius:10px; z-index:100; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,.5); display:none; }
+    .mention-item { padding:10px 14px; cursor:pointer; font-size:14px; display:flex; align-items:center; gap:8px; transition:background .15s; }
+    .mention-item:hover,.mention-item.focused { background:rgba(52,152,219,.15); }
+    .avatar { width:28px; height:28px; border-radius:50%; background:var(--blue); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:white; flex-shrink:0; }
+    .tags-wrap { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+    .tag { display:inline-flex; align-items:center; gap:5px; background:rgba(52,152,219,.15); border:1px solid rgba(52,152,219,.3); border-radius:20px; padding:4px 10px; font-size:13px; font-weight:600; color:#5dade2; }
+    .tag button { background:none; border:none; cursor:pointer; color:#5dade2; font-size:14px; line-height:1; padding:0; opacity:.6; }
+    .tag button:hover { opacity:1; }
+    .field textarea { width:100%; padding:12px 14px; background:var(--card2); border:1px solid var(--border); border-radius:10px; color:var(--text); font-family:'Inter',sans-serif; font-size:15px; resize:none; transition:border .2s; }
+    .field textarea:focus { outline:none; border-color:var(--red); }
+    .img-upload { width:100%; padding:12px; background:var(--card2); border:1px dashed var(--border); border-radius:10px; color:var(--muted); font-size:14px; font-weight:600; cursor:pointer; transition:all .2s; text-align:center; }
+    .img-upload:hover { border-color:var(--red); color:var(--text); }
+    .preview-wrap { position:relative; margin-top:10px; border-radius:10px; overflow:hidden; }
+    .preview-wrap img { width:100%; max-height:200px; object-fit:cover; display:block; }
+    .preview-wrap .remove { position:absolute; top:8px; right:8px; background:rgba(0,0,0,.7); border:none; color:white; border-radius:50%; width:30px; height:30px; font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+    .btn-submit { width:100%; padding:15px; background:var(--red); color:white; border:none; border-radius:12px; font-size:16px; font-weight:800; cursor:pointer; letter-spacing:.5px; box-shadow:0 4px 20px rgba(255,59,59,.35); transition:all .2s; margin-top:4px; }
+    .btn-submit:hover { background:#ff5555; transform:translateY(-1px); }
+    .btn-submit:disabled { background:#444; box-shadow:none; transform:none; cursor:not-allowed; }
+
+    /* LEADERBOARD */
+    .lb-card { background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+    .lb-row { display:flex; align-items:center; gap:12px; padding:14px 16px; border-bottom:1px solid var(--border); transition:background .15s; }
+    .lb-row:last-child { border-bottom:none; }
+    .lb-row:hover { background:rgba(255,255,255,.02); }
+    .lb-rank { font-size:22px; width:32px; text-align:center; flex-shrink:0; }
+    .lb-avatar { width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:700; color:white; flex-shrink:0; }
+    .lb-name { font-weight:700; font-size:15px; flex:1; }
+    .lb-right { text-align:right; }
+    .lb-count { font-size:22px; font-weight:900; color:var(--red); line-height:1; }
+    .lb-label { font-size:11px; color:var(--muted); }
+    .lb-bar-wrap { height:4px; background:var(--border); border-radius:2px; margin-top:6px; }
+    .lb-bar { height:4px; border-radius:2px; background:var(--red); transition:width .6s ease; }
+    .lb-empty { text-align:center; padding:40px; color:var(--muted); font-size:14px; }
+
+    /* HISTORY */
+    .list-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+    .list-header .title { font-size:13px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+    .refresh-btn { background:none; border:1px solid var(--border); border-radius:8px; color:var(--muted); padding:6px 12px; font-size:12px; cursor:pointer; font-family:'Inter',sans-serif; transition:all .2s; }
+    .refresh-btn:hover { border-color:var(--red); color:var(--text); }
+    .alert-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:10px; border-left:3px solid var(--red); transition:transform .15s; }
+    .alert-card:hover { transform:translateX(2px); }
+    .alert-top { display:flex; justify-content:space-between; align-items:flex-start; }
+    .alert-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(255,59,59,.12); border:1px solid rgba(255,59,59,.25); border-radius:20px; padding:3px 10px; font-size:12px; font-weight:700; color:var(--red); }
+    .alert-meta { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+    .meta-chip { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:var(--muted); background:var(--card2); border-radius:6px; padding:4px 8px; }
+    .alert-note { margin-top:8px; font-size:14px; color:#ccc; padding:8px 10px; background:var(--card2); border-radius:8px; }
+    .alert-people { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+    .person-tag { display:inline-flex; align-items:center; gap:4px; background:rgba(52,152,219,.12); border:1px solid rgba(52,152,219,.25); border-radius:20px; padding:3px 9px; font-size:12px; font-weight:600; color:#5dade2; }
+    .alert-img { width:100%; border-radius:8px; margin-top:10px; max-height:180px; object-fit:cover; }
+    .del-btn { background:none; border:none; cursor:pointer; color:#444; font-size:16px; padding:4px; transition:color .2s; }
+    .del-btn:hover { color:var(--red); }
+    .empty { text-align:center; padding:60px 20px; color:var(--muted); }
+    .empty .icon { font-size:56px; display:block; margin-bottom:12px; }
+    .spinner { text-align:center; padding:50px; color:var(--muted); font-size:14px; }
+    .live-dot { display:inline-block; width:7px; height:7px; background:var(--green); border-radius:50%; margin-left:6px; animation:blink 1.5s infinite; }
+    .footer { text-align:center; color:#444; font-size:11px; padding:24px 16px; }
+    .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--green); color:white; padding:12px 24px; border-radius:50px; font-weight:700; font-size:14px; transition:transform .3s ease; z-index:999; box-shadow:0 4px 20px rgba(46,204,113,.4); }
+    .toast.show { transform:translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <span class="siren">🚨</span>
+  <h1>Lab <span>Shelter</span> Tracker</h1>
+  <p class="subtitle">Real-time alert log for the lab team<span class="live-dot"></span></p>
+  <div class="counter-row">
+    <div class="counter-box"><div class="num" id="total">0</div><div class="lbl">Total Alerts</div></div>
+    <div class="counter-box"><div class="num" id="today-count">0</div><div class="lbl">Today</div></div>
+  </div>
+</div>
+
+<div style="max-width:520px;margin:0 auto">
+  <div class="tabs">
+    <button class="tab active" id="tab-list"       onclick="switchTab('list')">📋 History</button>
+    <button class="tab"        id="tab-leaderboard" onclick="switchTab('leaderboard')">🏆 Leaderboard</button>
+    <button class="tab"        id="tab-add"         onclick="switchTab('add')">🚨 Report</button>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- FORM -->
+  <div id="view-add" style="display:none">
+    <div class="form-card">
+      <div class="form-title"><span class="dot"></span> Log New Alert</div>
+      <div class="field">
+        <label>⏰ Alert Time</label>
+        <div class="time-row">
+          <input type="time" id="alert-time" class="time-input" />
+          <button class="time-now-btn" onclick="setNow()">Now</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>👥 People in Shelter</label>
+        <div class="people-wrap">
+          <input type="text" id="people-input" class="people-input" placeholder="Type @ to mention someone..." autocomplete="off"
+            oninput="onPeopleInput(event)" onkeydown="onPeopleKeydown(event)" />
+          <div class="mention-dropdown" id="mention-dropdown"></div>
+        </div>
+        <div class="tags-wrap" id="tags-wrap"></div>
+      </div>
+      <div class="field">
+        <label>📝 Note (optional)</label>
+        <textarea id="note" rows="2" placeholder="e.g. Long alert, stayed 5 min..."></textarea>
+      </div>
+      <div class="field">
+        <label>📷 Photo from shelter (optional)</label>
+        <div style="display:flex;gap:8px">
+          <button class="img-upload" style="flex:1" onclick="document.getElementById('fileCam').click()">📷 Camera</button>
+          <button class="img-upload" style="flex:1" onclick="document.getElementById('fileLib').click()">🖼️ Library</button>
+        </div>
+        <input type="file" id="fileCam" accept="image/*" capture="environment" style="display:none" onchange="handleImage(event)" />
+        <input type="file" id="fileLib" accept="image/*" style="display:none" onchange="handleImage(event)" />
+        <div id="preview-wrap" style="display:none" class="preview-wrap">
+          <img id="preview" src="" alt="preview" />
+          <button class="remove" onclick="removeImg()">×</button>
+        </div>
+      </div>
+      <button class="btn-submit" id="submit-btn" onclick="submitAlert()">🚨 Log Alert Now</button>
+    </div>
+  </div>
+
+  <!-- LEADERBOARD -->
+  <div id="view-leaderboard" style="display:none">
+    <div class="list-header">
+      <span class="title">🏆 Shelter Champions</span>
+    </div>
+    <div id="leaderboard-content"></div>
+  </div>
+
+  <!-- HISTORY -->
+  <div id="view-list">
+    <div class="list-header">
+      <span class="title">Alert History</span>
+      <button class="refresh-btn" onclick="loadAlerts()">↻ Refresh</button>
+    </div>
+    <div id="spinner" class="spinner">Loading alerts...</div>
+    <div id="alerts-list"></div>
+  </div>
+
+</div>
+
+<div class="footer">Auto-refreshes every 10s · Shared across all devices</div>
+<div class="toast" id="toast"></div>
+
+<script>
+  const BIN_ID  = "69c021fcc3097a1dd54bd66b";
+  const API_KEY = "$2a$10$hljAvSD6OHhx57Tfgu2.qOxgXEmC24iz0H3whA.pQzW5hApcs11Vq";
+  const BASE    = "https://api.jsonbin.io/v3/b/" + BIN_ID;
+
+  const LAB_MEMBERS = ["Alice","Bob","Dana","Eli","Gal","Hila","Itay","Yael","Noam","Shira"];
+  const AVATAR_COLORS = ["#e74c3c","#3498db","#2ecc71","#9b59b6","#f39c12","#1abc9c","#e67e22","#e91e63","#00bcd4","#8bc34a"];
+
+  let alerts=[], imgData=null, taggedPeople=[], focusedIdx=-1;
+
+  window.onload = () => { setNow(); switchTab('list'); loadAlerts(); setInterval(loadAlerts,10000); };
+
+  function setNow() {
+    document.getElementById("alert-time").value = new Date().toTimeString().slice(0,5);
+  }
+
+  function switchTab(v) {
+    ["list","leaderboard","add"].forEach(t => {
+      document.getElementById("view-"+t).style.display = t===v ? "block" : "none";
+      document.getElementById("tab-"+t).className = "tab"+(t===v?" active":"");
+    });
+    if (v==="add") setNow();
+    if (v==="leaderboard") renderLeaderboard();
+  }
+
+  // ── @ mention ──
+  function onPeopleInput(e) {
+    const val=e.target.value, atIdx=val.lastIndexOf("@");
+    if (atIdx===-1) { hideDropdown(); return; }
+    const q=val.slice(atIdx+1).toLowerCase();
+    const filtered=LAB_MEMBERS.filter(m=>m.toLowerCase().startsWith(q)&&!taggedPeople.includes(m));
+    filtered.length ? showDropdown(filtered) : hideDropdown();
+  }
+  function onPeopleKeydown(e) {
+    const dd=document.getElementById("mention-dropdown");
+    const items=dd.querySelectorAll(".mention-item");
+    if (dd.style.display==="none"||!items.length) return;
+    if (e.key==="ArrowDown") { e.preventDefault(); focusedIdx=Math.min(focusedIdx+1,items.length-1); updateFocus(items); }
+    else if (e.key==="ArrowUp") { e.preventDefault(); focusedIdx=Math.max(focusedIdx-1,0); updateFocus(items); }
+    else if (e.key==="Enter"||e.key==="Tab") { if(focusedIdx>=0){e.preventDefault();selectMember(items[focusedIdx].dataset.name);} }
+    else if (e.key==="Escape") hideDropdown();
+  }
+  function updateFocus(items) { items.forEach((el,i)=>el.className="mention-item"+(i===focusedIdx?" focused":"")); }
+  function showDropdown(members) {
+    focusedIdx=-1;
+    const dd=document.getElementById("mention-dropdown");
+    dd.innerHTML=members.map(m=>`<div class="mention-item" data-name="${m}" onmousedown="selectMember('${m}')"><div class="avatar">${m[0]}</div>@${m}</div>`).join("");
+    dd.style.display="block";
+  }
+  function hideDropdown() { document.getElementById("mention-dropdown").style.display="none"; focusedIdx=-1; }
+  function selectMember(name) {
+    const inp=document.getElementById("people-input");
+    const atIdx=inp.value.lastIndexOf("@");
+    inp.value=atIdx>=0?inp.value.slice(0,atIdx):"";
+    if (!taggedPeople.includes(name)) { taggedPeople.push(name); renderTags(); }
+    hideDropdown(); inp.focus();
+  }
+  function renderTags() {
+    document.getElementById("tags-wrap").innerHTML=taggedPeople.map(p=>`<div class="tag">@${p}<button onclick="removeTag('${p}')">×</button></div>`).join("");
+  }
+  function removeTag(name) { taggedPeople=taggedPeople.filter(p=>p!==name); renderTags(); }
+
+  // ── Image ──
+  function handleImage(e) {
+    const file=e.target.files[0]; if(!file) return;
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      const img=new Image();
+      img.onload=()=>{
+        const canvas=document.createElement("canvas");
+        const max=800; let w=img.width,h=img.height;
+        if(w>max){h=h*max/w;w=max;} if(h>max){w=w*max/h;h=max;}
+        canvas.width=w;canvas.height=h;
+        canvas.getContext("2d").drawImage(img,0,0,w,h);
+        imgData=canvas.toDataURL("image/jpeg",0.7);
+        document.getElementById("preview").src=imgData;
+        document.getElementById("preview-wrap").style.display="block";
+      };
+      img.src=ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+  function removeImg() {
+    imgData=null;
+    document.getElementById("preview-wrap").style.display="none";
+    document.getElementById("fileCam").value="";
+    document.getElementById("fileLib").value="";
+  }
+
+  // ── Submit ──
+  async function submitAlert() {
+    const btn=document.getElementById("submit-btn");
+    btn.textContent="⏳ Saving..."; btn.disabled=true;
+    const timeVal=document.getElementById("alert-time").value||new Date().toTimeString().slice(0,5);
+    const newAlert={
+      id:Date.now(), timestamp:new Date().toISOString(),
+      alertTime:new Date().toISOString().slice(0,10)+"T"+timeVal,
+      people:[...taggedPeople], note:document.getElementById("note").value.trim(), image:imgData||null
+    };
+    try {
+      // Re-fetch latest before writing to avoid overwriting concurrent changes
+      const latest=await fetch(BASE+"/latest",{headers:{"X-Access-Key":API_KEY}});
+      if (!latest.ok) throw new Error("Failed to fetch before save");
+      const latestData=await latest.json();
+      const freshAlerts=latestData?.record?.alerts||[];
+      const updated=[...freshAlerts,newAlert];
+      const saveRes=await fetch(BASE,{method:"PUT",headers:{"Content-Type":"application/json","X-Access-Key":API_KEY},body:JSON.stringify({alerts:updated})});
+      if (!saveRes.ok) throw new Error("Save failed: HTTP "+saveRes.status);
+      alerts=updated;
+      document.getElementById("note").value=""; taggedPeople=[]; renderTags(); removeImg();
+      renderAlerts(); showToast("✅ Alert logged!"); switchTab("list");
+    } catch { alert("Error saving"); }
+    btn.textContent="🚨 Log Alert Now"; btn.disabled=false;
+  }
+
+  // ── Load ──
+  async function loadAlerts() {
+    try {
+      const res=await fetch(BASE+"/latest",{headers:{"X-Access-Key":API_KEY}});
+      if (!res.ok) throw new Error("HTTP "+res.status);
+      const data=await res.json();
+      // Only update if we got a valid non-empty response
+      if (data && data.record && Array.isArray(data.record.alerts)) {
+        alerts=data.record.alerts;
+        renderAlerts();
+        if (document.getElementById("view-leaderboard").style.display!=="none") renderLeaderboard();
+      }
+    } catch(e) { console.error("Load error:",e); document.getElementById("spinner").textContent="❌ Failed to load — "+e.message; }
+  }
+
+  // ── Leaderboard ──
+  function buildLeaderboard() {
+    const counts={};
+    alerts.forEach(a=>(a.people||[]).forEach(p=>{ counts[p]=(counts[p]||0)+1; }));
+    return Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+  }
+
+  function renderLeaderboard() {
+    const board=buildLeaderboard();
+    const el=document.getElementById("leaderboard-content");
+    if (!board.length) { el.innerHTML='<div class="lb-empty">😌 No data yet — start tagging people in alerts!</div>'; return; }
+    const max=board[0][1];
+    const medals=["🥇","🥈","🥉"];
+    el.innerHTML=`<div class="lb-card">${board.map(([name,count],i)=>{
+      const color=AVATAR_COLORS[LAB_MEMBERS.indexOf(name)%AVATAR_COLORS.length]||"#3498db";
+      const pct=Math.round(count/max*100);
+      return `<div class="lb-row">
+        <div class="lb-rank">${medals[i]||`#${i+1}`}</div>
+        <div class="lb-avatar" style="background:${color}">${name[0]}</div>
+        <div style="flex:1">
+          <div class="lb-name">${name}</div>
+          <div class="lb-bar-wrap"><div class="lb-bar" style="width:${pct}%;background:${i===0?'var(--gold)':i===1?'var(--silver)':i===2?'var(--bronze)':'var(--red)'}"></div></div>
+        </div>
+        <div class="lb-right">
+          <div class="lb-count">${count}</div>
+          <div class="lb-label">alert${count!==1?"s":""}</div>
+        </div>
+      </div>`;
+    }).join("")}</div>`;
+  }
+
+  // ── Render alerts ──
+  function renderAlerts() {
+    document.getElementById("spinner").style.display="none";
+    const today=new Date().toDateString();
+    document.getElementById("total").textContent=alerts.length;
+    document.getElementById("today-count").textContent=alerts.filter(a=>new Date(a.timestamp).toDateString()===today).length;
+    const list=document.getElementById("alerts-list");
+    if (!alerts.length) { list.innerHTML='<div class="empty"><span class="icon">😌</span><p>No alerts logged yet</p></div>'; return; }
+    list.innerHTML=alerts.slice().reverse().map((a,i)=>{
+      const t=a.alertTime?new Date(a.alertTime).toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"}):formatDate(a.timestamp);
+      return `<div class="alert-card">
+        <div class="alert-top">
+          <span class="alert-badge">🚨 Alert #${alerts.length-i}</span>
+          <button class="del-btn" onclick="deleteAlert(${a.id})">🗑</button>
+        </div>
+        <div class="alert-meta">
+          <span class="meta-chip">🕐 ${t}</span>
+          <span class="meta-chip">📅 ${formatDate(a.timestamp)}</span>
+          ${a.people&&a.people.length?`<span class="meta-chip">👥 ${a.people.length} people</span>`:""}
+        </div>
+        ${a.people&&a.people.length?`<div class="alert-people">${a.people.map(p=>`<span class="person-tag">@${p}</span>`).join("")}</div>`:""}
+        ${a.note?`<div class="alert-note">💬 ${a.note}</div>`:""}
+        ${a.image?`<img class="alert-img" src="${a.image}" />`:""}
+      </div>`;
+    }).join("");
+  }
+
+  async function deleteAlert(id) {
+    if (!confirm("Delete this alert?")) return;
+    const updated=alerts.filter(a=>a.id!==id);
+    await fetch(BASE,{method:"PUT",headers:{"Content-Type":"application/json","X-Access-Key":API_KEY},body:JSON.stringify({alerts:updated})});
+    alerts=updated; renderAlerts(); renderLeaderboard();
+  }
+
+  function formatDate(iso) {
+    const d=new Date(iso);
+    return d.toLocaleDateString("en-GB")+" "+d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
+  }
+  function showToast(msg) {
+    const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show");
+    setTimeout(()=>t.classList.remove("show"),3000);
+  }
+</script>
+</body>
+</html>
