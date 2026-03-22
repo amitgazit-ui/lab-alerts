@@ -320,7 +320,8 @@
       if (data && data.record && Array.isArray(data.record.alerts)) {
         alerts=data.record.alerts;
         renderAlerts();
-        if (document.getElementById("view-leaderboard").style.display!=="none") renderLeaderboard();
+        renderLeaderboard();
+
       }
     } catch(e) { console.error("Load error:",e); document.getElementById("spinner").textContent="❌ Failed to load — "+e.message; }
   }
